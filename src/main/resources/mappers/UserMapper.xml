@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ning.service.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ning.service.entity.User">
+        <id column="id" property="id" />
+        <result column="user_uuid" property="userUuid" />
+        <result column="is_dvailable" property="isDvailable" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="email" property="email" />
+        <result column="telephone" property="telephone" />
+        <result column="image" property="image" />
+        <result column="last_ip" property="lastIp" />
+        <result column="last_time" property="lastTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, user_uuid, username, password, email, telephone,  image, last_ip, last_time,is_dvailable
+    </sql>
+
+    <select id="findUserAll"  resultType="java.util.HashMap">
+        select u.*,r.id as role_id,r.role_name,r.role_chinese_name from user  u left join user_role ur on u.id = ur.user_id left join role r on r.id = ur.role_id
+    </select>
+
+    <update id="updateIpTimeByid" parameterType="com.ning.service.entity.User">
+        update USER
+        <set>
+            <if test="lastIp!=null">last_ip=#{lastIp},</if>
+            <if test="lastTime!=null">last_time=#{lastTime}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>

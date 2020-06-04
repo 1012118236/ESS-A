@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ning.service.mapper.MenusMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ning.service.entity.Menus">
+        <id column="id" property="id" />
+        <result column="pid" property="pid" />
+        <result column="menuName" property="menuName" />
+        <result column="url" property="url" />
+        <result column="order_value" property="orderValue" />
+        <result column="image" property="image" />
+        <result column="tier" property="tier" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, pid, menuName, url, order_value,tier
+    </sql>
+
+    <select id="queryMenusByUsername" parameterType="com.ning.service.entity.User" resultType="com.ning.service.entity.Menus">
+
+              with userMe as (
+        <if test="username!=null and username != '' ">
+            select
+            distinct m.*
+            from user u
+            inner join user_role ur
+            on ur.user_id = u.id
+            inner join menus_role mr
+            on mr.role_id = ur.role_id
+            inner join menus m
+            on m.id = mr.menus_id
+                where
+                u.username = #{username}
+        </if>
+        <if test="username==null or username == '' ">
+            select m.* from menus m
+        </if>
+        ),
+        b1 as (
+        select me.*
+        from menus as me, userMe
+        where me.id in (userMe.pid)),
+        b2 as (
+        select *
+        from userMe um
+        union select *
+        from b1
+        union
+        select me.*
+        from menus as me, b1
+        where me.id in (b1.pid)
+        )
+        select distinct *
+        from b2
+        order by tier, order_value asc
+
+    </select>
+
+    <select id="queryMenusByUsernameMap" parameterType="String" resultType="java.util.HashMap">
+        select
+          distinct m.*
+        from user u
+        inner join user_role ur
+        on ur.user_id = u.id
+        inner join menus_role mr
+        on mr.role_id = ur.role_id
+        inner join menus m
+        on m.id = mr.menus_id
+        where
+        u.username = #{username}
+    </select>
+
+    <update id="updateMenu" parameterType="com.ning.service.entity.Menus">
+        update menus set
+        pid = #{pid},
+        menuName = #{menuName},
+         url = #{url},
+         order_value = #{orderValue},
+         tier = #{tier}
+         where id = #{id}
+    </update>
+
+</mapper>

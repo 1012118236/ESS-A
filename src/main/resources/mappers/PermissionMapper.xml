@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ning.service.mapper.PermissionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ning.service.entity.Permission">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="descritpion" property="descritpion" />
+        <result column="url" property="url" />
+        <result column="status" property="status" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, descritpion, url, pid
+    </sql>
+
+    <select id="findAll" resultType="com.ning.service.entity.Permission">
+        select * from permission
+    </select>
+    
+    <select id="findByAdminUserId" parameterType="int" resultType="com.ning.service.entity.Permission">
+        select p.*
+          from user u
+          inner join user_role ur on ur.user_id = u.id
+          inner join role r on r.id = ur.role_id
+          inner join permission_role pr on pr.role_id = r.id
+          inner join permission p on p.id = pr.permission_id
+          where u.id = #{userId}
+    </select>
+
+    <select id="findPermissionByUser" parameterType="string" resultType="com.ning.service.entity.Permission">
+        select distinct p.*from permission p
+        inner join permission_role pr on p.id = pr.permission_id
+        inner join user_role ur on ur.role_id = pr.role_id
+        inner join user u on u.id = ur.user_id
+        where u.username = #{username}
+    </select>
+</mapper>
