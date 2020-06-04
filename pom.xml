@@ -9,10 +9,10 @@
         <version>2.1.1.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.service</groupId>
-    <artifactId>service</artifactId>
+    <groupId>com.ning.service</groupId>
+    <artifactId>ESS-A</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>yunos</name>
+    <name>ESS-A</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
