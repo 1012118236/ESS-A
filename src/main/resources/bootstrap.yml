@@ -1,0 +1,18 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 192.168.110.6:8848
+        prefix: serviceProvider
+        file-extension: yaml
+        username: nacos
+        password: nacos
+        enabled: true
+        namespace: public
+        #group: DEFAULT_GROUP
+        encode: UTF-8
+        timeout: 10000
+        #context-path: /nacos
+        refresh-enabled: false
+      discovery:
+        server-addr: 192.168.110.6:8848
