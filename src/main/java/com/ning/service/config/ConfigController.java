@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author shenjiang
- * @Description:
+ * @Description: 动态加载nacos配置文件内容
  * @Date: 2020/7/19 15:38
  */
 @RestController
