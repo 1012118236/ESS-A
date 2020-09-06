@@ -15,7 +15,7 @@ import java.util.*;
 public class GenteratorCode {
 
     public static void main(String[] args) throws InterruptedException {
-        String[] Tablestr = new String[]{"metertask"};//需要生成实例的表
+        String[] Tablestr = new String[]{"incidentoperation_two","message_two"};//需要生成实例的表
 
         //用来获取mybatis-plus.properties文件的配置信息
         final ResourceBundle rb = ResourceBundle.getBundle("mybatis-plus");

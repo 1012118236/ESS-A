@@ -55,6 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/loginLose").permitAll()
                 .antMatchers("/tasks/**").permitAll()
                 .antMatchers("/employee/**").permitAll()
+                .antMatchers("/dtc/**").permitAll()
                 //只有USER角色才能访问
                 //.antMatchers("/tasks/**").hasRole("USER")
                 //.antMatchers("/menus/**").hasRole("HAHAS")

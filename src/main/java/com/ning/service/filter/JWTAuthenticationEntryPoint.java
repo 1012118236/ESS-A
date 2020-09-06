@@ -11,7 +11,7 @@ import java.io.IOException;
 
 /**
  * @author shenjiang
- * @Description: 统一结果处理
+ * @Description: 请求未授权处理
  * @Date: 2019/5/24 16:43
  */
 public class JWTAuthenticationEntryPoint implements AuthenticationEntryPoint {

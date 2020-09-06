@@ -9,6 +9,8 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 
 /**
  * @author shenjiang
@@ -45,6 +47,24 @@ public class RedisConfig {
         // hash的value序列化方式采用jackson
         template.setHashValueSerializer(jackson2JsonRedisSerializer);
         template.afterPropertiesSet();
+
         return template;
     }
+
+    /**
+     * 带有事务的redis
+     * @param factory
+     * @return
+     */
+    @Bean
+    @SuppressWarnings("all")
+    public RedisTemplate<String,Object> redisTransactionTemplate(RedisConnectionFactory factory) {
+        RedisTemplate<String, Object> trmplate = redisTemplate(factory);
+        /**
+         * description 开启redis事务（仅支持单机，不支持cluster）
+         */
+        trmplate.setEnableTransactionSupport(true);
+        return trmplate;
+    }
+
 }

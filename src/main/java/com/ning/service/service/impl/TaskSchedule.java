@@ -2,12 +2,14 @@ package com.ning.service.service.impl;
 
 
 import com.ning.service.service.ITaskService;
+import com.ning.service.utils.RedisUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.util.Set;
@@ -26,14 +28,16 @@ public class TaskSchedule implements CommandLineRunner {
 
     @Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
+    private RedisUtil redisUtil;
 
     @PostConstruct
+    @Transactional
     public void delRedis(){
         logger.info("redis缓存清空中....");
         Set keys = redisTemplate.keys("*");
         redisTemplate.delete(keys);
         logger.info("redis缓存清空完成....");
-
     }
 
     @Override
