@@ -1,9 +1,10 @@
 spring:
+  application:
+    name: ESS-service
   cloud:
     nacos:
       config:
         server-addr: 192.168.110.6:8848
-        prefix: serviceProvider
         file-extension: yaml
         username: nacos
         password: nacos
@@ -13,6 +14,13 @@ spring:
         encode: UTF-8
         timeout: 10000
         #context-path: /nacos
-        refresh-enabled: false
+        refresh-enabled: true
       discovery:
         server-addr: 192.168.110.6:8848
+  profiles:
+    active: dev
+logging:
+  level:
+    com.alibaba.nacos: warn
+  pattern:
+    level: error
